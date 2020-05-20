@@ -1,0 +1,45 @@
+package com.rfo.basic;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.VelocityTracker;
+import android.widget.EditText;
+import android.widget.Scroller;
+import android.widget.Toast;
+
+
+public class Editor extends Activity {
+	private static final String LOGTAG = "Editor";
+
+	// Things to save and restore if the system kills us.
+	private static final String STATE_PROGRAM_PATH = "programPath";
+	private static final String STATE_PROGRAM_FILE_NAME = "programFileName";
+	private static final String STATE_INITIAL_SIZE = "initialSize";
+	private static final String STATE_SAVED = "isSaved";
+	private static final String STATE_ERROR_DISPLACEMENT = "errorDisplacement";
+	private static final String STATE_MTEXT_DATA = "theText";
+	public static final String EXTRA_RESTART = "com.rfo.basic.doRestart";
+	public static final String EXTRA_LOADPATH = "com.rfo.basic.initLoadPath";

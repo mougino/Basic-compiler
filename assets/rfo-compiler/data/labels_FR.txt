@@ -1,0 +1,173 @@
+﻿// Initialization
+[compiler] Compilateur BASIC!
+[no_rfo_1] RFO BASIC! n'a pas été détecté sur votre appareil.
+[no_rfo_2] Vous pouvez l'installer depuis le magasin d'applications Google :
+[no_bas_1] Il n'y a aucun programme BASIC! dans <b>rfo-basic/source</b>.
+[no_bas_2] Vous devez écrire et tester vos programmes avec l'éditeur RFO BASIC! avant de pouvoir les compiler.
+[no_img] aucune image dans rfo-basic/data
+
+// Shared by multiple screens
+[tap_opt] appui long = options
+[tap_info] appui long = information
+[default] Défaut
+[validate] Valider les changements
+[conflict] Conflit
+[overwrite] Ecraser
+[exit] Quitter
+[next] Suiv.
+[prev] Préc.
+[cancel] Annuler
+[del] Supprimer
+[yes] Oui
+[no] Non
+
+// Projects menu
+[new_apk] Nouvel APK
+[pick_among] Choisissez parmi
+[prog] Programme(s)
+[and] et
+[res] Ressource(s)
+[inc] yc.
+[img] Image(s)
+[sel_proj] Choisissez un projet :
+[del_proj] Supprimer ce projet ?
+[last_edit] Dernière édition il y a XXX.
+[year] an(s)
+[month] mois
+[day] jour(s)
+[hour] heure(s)
+[minute] minute(s)
+[second] seconde(s)
+[using] Utilise
+[opt] Options :
+[drk-thm] Thème sombre
+[fast-cp] Autoriser la re-compilation rapide
+[log-act] Activer les logs
+[log-war] (attention: peut ralentir la compilation)
+[vis-imp] Ecran de permissions dédié pour les malvoyants
+[sup-opt] Super Utilisateur
+[cust-cert] Certificat Utilisateur
+[policy] Politique Vie Privée
+[contact] Contacter
+[send-log] Nous avons détecté les logs d'une compilation précédente. Voulez-vous les partager ?
+[translate] Proposer/Modifier une traduction
+
+// Select main bas
+[sel_bas] Choisissez votre programme principal
+[use_inc] Est-ce que ce programme utilise des fichiers "Include" ?
+[use_res] Est-ce que ce programme a des ressources ?
+[has_gw_0] Lib GW
+[has_gw_1] Nous avons détecté que votre programme utilise la librairie GW.
+[has_gw_2] Le Compilateur BASIC! va attacher les bons fichiers "Include" et ressources automatiquement à votre projet.
+[has_gw_3] Cool?
+[has_gw_4] Cool
+[need_bas] Vous devez choisir\nun programme principal
+
+// Select include files & resources
+[sel_inc] Choisissez votre (vos) fichier(s) "Include"
+[sel_res] Choisissez vos ressources
+
+// Fast re-compile
+[fast] Garder les mêmes options que la dernière compilation et faire une recompilation rapide:
+[slow] Ou pouvoir changer ces options et faire une compilation complète (plus lent).
+
+// App name, version and icon
+[pick_ico] Choisissez l'icône de votre APK :
+[app_exist] Cet APK existe déjà.
+[ren_app] Renommez l'APK svp
+[app_nam] Nom de l'APK :
+[bad_app_nam] Nom d'APK illégal
+[app_ver] Version de l'APK :
+[bad_app_ver] Numéro de version incorrect
+[app_ico] Icône de l'APK :
+[ico_quali] Qualité de l'icône :
+[def_ico] Icône p/défaut
+[def_ico_set] Icône par défaut choisie
+[show_adv] Voir les options avancées dans le prochain écran ?
+[super] Variante BASIC! utilisée pour la compilation :
+
+// Advanced options
+[app_dir] Répertoire APK
+[bad_app_dir] Nom du répertoire non valide
+[app_cod] Code de version
+[bad_app_cod] Code de version non valide\n(doit être un nombre entier)
+[perm] Permissions :
+[start_boot] Démarrer l'APK avec l'appareil
+[create_data] Créer sdcard/nom_apk/data
+[create_db] Créer sdcard/nom_apk/databases
+[show_sup_adv] Voir les options super avancées
+
+// Super advanced options
+[pkg_nam] Nom du package
+[bad_pkg_nam] Nom de package non valide
+[splash] Ecran de démarrage
+[con] Personnalisation de la console
+[reg] Enregistrer des extensions
+[reg_dlg] Tapez une ou plusieurs extensions de fichiers séparées par des virgules\nEx: ".pdf, .txt, .doc"\nVotre app se lancera lorsqu'un utilisateur tapera sur de tels fichiers.
+[bad_reg] Extension(s) invalide(s),\nveuillez réessayer svp
+[hw_accel] Activer l'accélération matérielle
+[mem] Utiliser mémoire programme étendue (64 Mo)
+[encrypt] Protéger (encrypter) les fichiers .bas
+[copy] Copier les ressources sur sdcard
+
+// Splash screen
+[pick_splash] Choisir un écran de démarrage :
+[splash_time_1] Affichage en seconde
+[splash_time_2] 0 = pas d'écran de démarrage
+[bad_time] Temps non valide
+[bgd_col] Couleur fond
+
+// Console
+[has_lines] Lignes console
+[has_menu] Menu Console
+[fnt_col] Couleur écritures
+[bgd] Arrière-plan
+[lin] Lignes
+[lin_col] Couleur lignes
+[empty] Zone vide
+[fnt_siz] Taille police
+[fnt_typ] Type de police
+[scr_dir] Orientation écran
+
+// Sum-up
+[ready] Prêt à compiler :
+[hit_back] Pressez la touche retour pour modifier.
+[compile] Compiler !
+[app_ver_str] Version de l'APK :
+[app_ver_cod] Code de version :
+[app_pkg_nam] Nom du package :
+[app_dir_2] Répertoire local :
+[inc_files] fichier(s) "<b>Include</b>"
+[res_files] <b>ressource(s)</b> choisie(s)
+[perm_list] permission(s) :
+
+// Compilation
+[unpack] Dépaquetage du projet XXX...
+[unpack_ko] Dépaquetage KO!
+[prepare] Préparation...
+[install] Installation des outils...
+[chmod] Installation + Chmod de XXX
+[inst_tool] Installation de XXX
+[inst_ko] Installation KO!\nCopie vers XXX impossible
+[custo] Personnalisation...
+[modify] Modification de XXX
+[set_icons] Création des icônes...
+[copy_bas_res] Copie du programme et des resources
+[create_r] Création de R.java
+[err_r] Erreur à la création de R.java
+[libs] Extraction des classes de XXX
+[compiling] Compilation de XXX
+[err_compiling] La compilation de XXX a échoué! Détails :
+[classes] XXX classes créées. Déplacement vers /bin
+[dex] Création de 'classes.dex'...
+[dex_ko] Classes.dex KO!
+[err_dex] L'erreur suivante a été retournée :
+[pack] Compression
+[pack_ko] Compression KO!
+[add_bin] Ajout des binaires
+[sign] Signature
+[sign_ko] Signature KO!
+[clean] Nettoyage...
+[compile_ok] XXX a été correctement produit en YYY
+[open_dir] Ouvrir son répertoire
+[install] Installer cet APK maintenant !

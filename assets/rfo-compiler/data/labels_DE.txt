@@ -1,0 +1,173 @@
+﻿// Initialization
+[compiler] BASIC! Compiler
+[no_rfo_1] RFO BASIC! wurde auf Ihrem Gerät nicht gefunden.
+[no_rfo_2] Sie können es vom Google Play-Store installieren:
+[no_bas_1] Im Pfad <b>rfo-basic/source</b> ist kein BASIC!-Programm.
+[no_bas_2] Ihr Programm wird mit dem RFO-BASIC!-Editor bearbeitet und getestet bevor es compiliert werden kann.
+[no_img] Kein Bild in Ordner rfo-basic/data
+
+// Shared by multiple screens
+[tap_opt] Langes Drücken für Optionen
+[tap_info] Langes Drücken für Information
+[default] Voreinstellung
+[validate] Überprüfe Änderungen
+[conflict] Konflikt
+[overwrite] Überschreibe
+[exit] Beenden
+[next] Nächstes
+[prev] Früher
+[cancel] Abbruch
+[del] Löschen
+[yes] Ja
+[no] Nein
+
+// Projects menu
+[new_apk] Neues APK
+[pick_among] Picke zwischen
+[prog] Programm
+[and] und
+[res] Ressource
+[inc] ff.
+[img] Bild
+[sel_proj] Wähle ein Projekt:
+[del_proj] Dies Projekt löschen?
+[last_edit] Letzte Bearbeitung vor XXX.
+[year] Jahr(en)
+[month] Monat(en)
+[day] Tag(en)
+[hour] Stunde(n)
+[minute] Minute(n)
+[second] Sekunde(n)
+[using] Verwendung
+[opt] Optionen:
+[drk-thm] Dunkles Thema
+[fast-cp] Schnelles Re-Kompilieren zulassen
+[log-act] Logs aktivieren
+[log-war] (Warnung: kann die Kompilierung verlangsamen)
+[vis-imp] Dedizierte Berechtigungen Bildschirm für Sehbehinderte
+[sup-opt] Super User
+[cust-cert] Benutzerdefiniertes Zertifikat
+[policy] Datenschutz-Bestimmungen
+[contact] Kontakt
+[send-log] Wir haben Protokolle aus einer vorherigen Zusammenstellung erkannt. Möchten Sie sie teilen?
+[translate] Übersetzung vorschlagen / ändern
+
+// Select main bas
+[sel_bas] Wählen Sie Ihr Hauptprogramm
+[use_inc] Verwendet Ihr Programm Include-Dateien?
+[use_res] Hat Ihr Programm Ressourcen?
+[has_gw_0] GW Lib
+[has_gw_1] Wir ermittelten das Ihr Programm die GW-Bibliothek verwendet.
+[has_gw_2] Der BASIC!-Compiler fürgt automatisch Include-Dateien und Ressourcen Ihrem Projekt hinzu.
+[has_gw_3] Cool?
+[has_gw_4] Cool
+[need_bas] Sie müssen ein\n  Hauptprogramm wählen
+
+// Select include files & resources
+[sel_inc] Wählen Sie Ihre Include-Dateie(n)
+[sel_res] Wählen Sie Ihre Ressource(n)
+
+// Fast re-compile
+[fast] Behalten Sie die Einstellungen der letzten Kompilierung bei und machen Sie erneut eine vereinfachte daher schnellere Kompilierung:
+[slow] Oder Sie führen eine vollständige aber langsamere Kompilierung mit geänderten Einstellungen durch.
+
+// App name, version and icon
+[pick_ico] Wählen Sie Ihr App-Icon:
+[app_exist] Diese App existiert schon.
+[ren_app] Bitte die App umbenennen
+[app_nam] App-Name:
+[bad_app_nam] Ungültiger App-Name
+[app_ver] App Version:
+[bad_app_ver] Falsche Versions-Nummer
+[app_ico] App-Icon:
+[ico_quali] Icon-Qualität:
+[def_ico] Standard-Icon
+[def_ico_set] Standard-Icon-Garnitur
+[show_adv] Optionen für Fortgeschrittene im nächsten Fenster zeigen?
+[super] BASIC! zur Kompilierung verwendete Variante:
+
+// Advanced options
+[app_dir] App-Ordner
+[bad_app_dir] Kein erlaubter Ordner-Name
+[app_cod] Versions-Code
+[bad_app_cod] Ungültiger Versions-Code\n(Muss vom Typ Integer sein.)
+[perm] Berechtigungen:
+[start_boot] Auto-start app when device boots
+[create_data] Erzeuge Ordner sdcard/app_name/data
+[create_db] Erzeuge Ordner sdcard/app_name/databases
+[show_sup_adv] Zeige Optionen für Erfahrene
+
+// Super advanced options
+[pkg_nam] Paketname
+[bad_pkg_nam] Kein erlaubter Paketname
+[splash] Startbildschirm
+[con] Aussehen der Console
+[reg] Register-Erweiterungen
+[reg_dlg] Geben Sie eine oder mehrere Datei-Erweiterungen von Comas getrennt.\nZ.B. ".pdf, .txt, .doc"\nDie app wird gestartet werden, wenn ein Benutzer diese Dateien tippt.
+[bad_reg] Ungültige Erweiterungen,\nbitte versuchen Sie es erneut
+[hw_accel] Aktiviere Hardware-Beschleunigung
+[mem] Benutze großen Heap-Speicher (64 MB)
+[encrypt] Schütze (verschlüssele) .bas-Dateien
+[copy] Ressourcen auf sdcard kopieren
+
+// Splash screen
+[pick_splash] Wähle Startbildschirm:
+[splash_time_1] Startbildschirm-Anzeigezeit in Sekunden
+[splash_time_2] Setze 0 für keinen Startbildschirm
+[bad_time] Ungültige Zeitangabe
+[bgd_col] Hintergrund-Farbe
+
+// Console
+[has_lines] Linierte Console
+[has_menu] Consolen-Menü
+[fnt_col] Schriftfarbe
+[bgd] Hintergrund
+[lin] Linien
+[lin_col] Linien-Farbe
+[empty] Leeren Zone
+[fnt_siz] Schriftgröße
+[fnt_typ] Schrifttyp
+[scr_dir] Bildschirm-Orientierung
+
+// Sum-up
+[ready] Bereit zum Compilieren:
+[hit_back] Betätige Back um Änderungen vorzunehmen.
+[compile] Compiliere!
+[app_ver_str] App-Version:
+[app_ver_cod] App-Versions-Code:
+[app_pkg_nam] App-Paketname:
+[app_dir_2] App-Verzeichnis:
+[inc_files] <b>Include</b>-Datei(en)
+[res_files] ausgewählte <b>Ressource(n)</b>
+[perm_list] Berechtigung(en):
+
+// Compilation
+[unpack] Entpacke Projekt XXX...
+[unpack_ko] Entpacken KO!
+[prepare] Bereite vor...
+[install] Installations-Werkzeuge...
+[chmod] Installiere XXX und setze Zugriffsrechte
+[inst_tool] Installiere XXX
+[inst_ko] Installation KO!\nKann nicht nach XXX kopieren
+[custo] Passe an...
+[modify] Modifiziere XXX
+[set_icons] Setze Icons...
+[copy_bas_res] Kopiere bas and resources
+[create_r] Erzeuge R.java
+[err_r] Fehler beim Erzeugen von R.java
+[libs] Extrahieren von Klassen aus XXX
+[compiling] Compiliere XXX
+[err_compiling] Compilation von XXX gescheitert! Details:
+[classes] Erzeugte XXX Klassen. Verschiebe diese nach /bin
+[dex] Erzeuge Datei classes.dex...
+[dex_ko] Erzeugung der Datei classes.dex KO!
+[err_dex] Folgender Fehler wurde zurückgegeben:
+[pack] Packe
+[pack_ko] Packprozess KO!
+[add_bin] Füge Binaries hinzu
+[sign] Signiere
+[sign_ko] Signieren KO!
+[clean] Säubern...
+[compile_ok] XXX fehlerlos erzeugt in YYY
+[open_dir] Öffnen Sie seine Ordner
+[install] Diese APK jetzt installieren!

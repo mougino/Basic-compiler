@@ -1,0 +1,14 @@
+
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class HandleNotify extends Activity {
+	
+	protected void onCreate(Bundle savedInstanceState) {
+	    super.onCreate(savedInstanceState);
+		Run.Notified = true;
+		finish();
+	}
+	
+}

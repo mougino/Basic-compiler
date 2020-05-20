@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--  *********************************************************************************
+
+BASIC! is an implementation of the Basic programming language for
+Android devices.
+ 
+ Copyright (C) 2010 - 2014 Paul Laughton
+
+This file is part of BASIC! for Android
+
+    BASIC! is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    BASIC! is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with BASIC!.  If not, see <http://www.gnu.org/licenses/>.
+
+    You may contact the author or current maintainers at http://rfobasic.freeforums.org
+	
+	**********************************************************************************
+	-->
+
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent" android:layout_height="fill_parent" >
+
+	<LinearLayout android:id="@+id/search_buttons"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:orientation="horizontal"
+		android:layout_marginLeft="10dip"
+		android:layout_marginRight="10dip"
+		android:layout_marginBottom="8dip"
+		android:layout_alignParentBottom="true" >
+
+		<Button android:id="@+id/next_button"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:textSize="12sp"
+			android:text="Next" />
+
+		<Button android:id="@+id/done_button"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:textSize="12sp"
+			android:text="Done" />
+
+		<Button android:id="@+id/replace_button"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:textSize="12sp"
+			android:text="Replace" />
+
+		<Button android:id="@+id/replace_all_button"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:textSize="12sp"
+			android:text="Replace All" />
+
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/replace_fields"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:orientation="horizontal"
+		android:layout_above="@id/search_buttons"
+		android:layout_marginRight="10dip"
+		android:layout_marginBottom="8dip" >
+	
+		<TextView
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_marginRight="10dip"
+			android:gravity="right"
+			style="@style/label_l"
+			android:text="Replace With:" />
+	
+		<EditText android:id="@+id/replace_text"
+			android:layout_weight="3"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			style="@style/edit_text_l" />
+
+	</LinearLayout>
+
+	<LinearLayout android:id="@+id/search_fields"
+		android:layout_width="fill_parent"
+		android:layout_height="40dip"
+		android:orientation="horizontal"
+		android:layout_above="@id/replace_fields"
+		android:layout_marginRight="10dip"
+		android:layout_marginBottom="8dip" >
+
+		<TextView
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			android:layout_marginRight="10dip"
+			android:gravity="right"
+			style="@style/label_l"
+			android:text="Search For:" />
+
+		<EditText android:id="@+id/search_text"
+			android:layout_weight="3"
+			android:layout_width="0dip"
+			android:layout_height="fill_parent"
+			style="@style/edit_text_l" />
+
+	</LinearLayout>
+
+	<EditText android:id="@+id/the_text"
+		android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:layout_above="@id/search_fields"
+		android:layout_marginBottom="8dip"
+		android:scrollHorizontally="true"
+		android:typeface="monospace"
+		android:gravity="top"
+		style="@style/edit_text_l" />
+
+</RelativeLayout>

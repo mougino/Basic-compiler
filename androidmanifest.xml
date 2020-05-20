@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*********************************************************************************
+BASIC! is an implementation of the Basic programming language for
+Android devices.
+
+Copyright (C) 2010 - 2016 Paul Laughton
+
+This file is part of BASIC! for Android
+
+    BASIC! is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    BASIC! is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with BASIC!.  If not, see <http://www.gnu.org/licenses/>.
+
+    You may contact the author or current maintainers at http://rfobasic.freeforums.org
+
+**********************************************************************************
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rfo.compiler"
+    android:versionCode="1935"
+    android:versionName="01.92" >
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" android:required="false"></uses-permission>
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <uses-sdk android:minSdkVersion="7" android:targetSdkVersion="28" />
+
+    <supports-screens android:xlargeScreens="true" />
+
+    <application
+        android:usesCleartextTraffic="true"
+        android:allowBackup="false"
+        android:fullBackupContent="@xml/backup_rules"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name" >
+        <receiver
+            android:name=".BootUpReceiver"
+            android:enabled="false" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:id="@+id/basic_screen"
+            android:name="Basic"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/app_name" >
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.MULTIWINDOW_LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:id="@+id/editor_screen"
+            android:name=".Editor"
+            android:label="@string/editor_name"
+            android:hardwareAccelerated="false" >
+        </activity>
+
+        <activity
+            android:id="@+id/settings_screen"
+            android:name="Settings"
+            android:label="@string/settings_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/load_screen"
+            android:name="LoadFile"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/load_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/delete_screen"
+            android:name="Delete"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/delete_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/run_screen"
+            android:name="Run"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/run_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/search_screen"
+            android:name="Search"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/search_name"
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:hardwareAccelerated="false" >
+        </activity>
+
+        <activity
+            android:id="@+id/format_screen"
+            android:name="Format"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/format_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/help_screen"
+            android:name="Help"
+            android:label="@string/help_name"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+        </activity>
+
+        <activity
+            android:id="@+id/gr_screen"
+            android:name="GR"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/gr_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <activity
+            android:id="@+id/select_screen"
+            android:name="Select"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/select_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/text_input_screen"
+            android:name="TextInput"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/textinput_name" >
+        </activity>
+
+        <activity
+            android:id="@+id/text_get_screen"
+            android:name="TGet"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/textinput_name"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
+        </activity>
+
+        <activity
+            android:id="@+id/web_view_screen"
+            android:name="Web"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/web_view_name"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+        </activity>
+
+        <activity
+            android:id="@+id/camera_screen"
+            android:name="CameraView"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="Camera"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <activity
+            android:id="@+id/notify_screen"
+            android:name="HandleNotify"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="Notify"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <activity
+            android:id="@+id/device_list_screen"
+            android:name="DeviceListActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/select_device"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+
+        <activity
+            android:name="Null"
+            android:label="@string/select_name" >
+        </activity>
+
+        <!-- Following provider tag is needed to install apks in Android N.
+             Also needed is a new xml file "res/xml/provider_paths.xml" -->
+        <provider
+            android:name=".GenericFileProvider"
+            android:authorities="com.rfo.compiler.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
+
+        <uses-library android:name="com.sec.android.app.multiwindow" android:required="false" />
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
+
+        <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_W" android:value="632.0dip" />
+        <meta-data android:name="com.sec.android.multiwindow.DEFAULT_SIZE_H" android:value="598.0dip" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_W" android:value="632.0dip" />
+        <meta-data android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H" android:value="598.0dip" />
+    </application>
+
+</manifest>

@@ -1,0 +1,173 @@
+﻿// Initialization
+[compiler] BASIC! Compiler
+[no_rfo_1] RFO BASIC! was not detected on your device.
+[no_rfo_2] You can install it from the Google Play Store:
+[no_bas_1] There is no BASIC! program in <b>rfo-basic/source</b>.
+[no_bas_2] You need to create and test your programs with the RFO BASIC! Editor before you can compile them.
+[no_img] no image in rfo-basic/data
+
+// Shared by multiple screens
+[tap_opt] long-press for options
+[tap_info] long-press for information
+[default] Default
+[validate] Validate changes
+[conflict] Conflict
+[overwrite] Overwrite
+[exit] Exit
+[next] Next
+[prev] Prev.
+[cancel] Cancel
+[del] Delete
+[yes] Yes
+[no] No
+
+// Projects menu
+[new_apk] New APK
+[pick_among] Pick among
+[prog] Program(s)
+[and] and
+[res] Resource(s)
+[inc] inc.
+[img] Image(s)
+[sel_proj] Select a project:
+[del_proj] Delete this project ?
+[last_edit] Last edited XXX ago.
+[year] year(s)
+[month] month(s)
+[day] day(s)
+[hour] hour(s)
+[minute] minute(s)
+[second] second(s)
+[using] Using
+[opt] Options:
+[drk-thm] Dark theme
+[fast-cp] Allow fast re-compile
+[log-act] Activate logs
+[log-war] (warning: may slow down compilation)
+[vis-imp] Dedicated permission screen for the visually impaired
+[sup-opt] Super User
+[cust-cert] Custom Certificate
+[policy] Privacy Policy
+[contact] Contact
+[send-log] We detected logs from a previous compilation. Do you wish to share them?
+[translate] Propose/Modify a translation
+
+// Select main bas
+[sel_bas] Select your main program
+[use_inc] Does your program use include files ?
+[use_res] Does your program have resources ?
+[has_gw_0] GW Lib
+[has_gw_1] We detected that your app makes use of the GW lib.
+[has_gw_2] BASIC! Compiler will attach the correct include file and resources automatically to your project.
+[has_gw_3] Cool?
+[has_gw_4] Cool
+[need_bas] You need to select\n  a main program
+
+// Select include files & resources
+[sel_inc] Select your include file(s)
+[sel_res] Select your resources
+
+// Fast re-compile
+[fast] Keep the same settings as the last compilation and do a fast re-compile:
+[slow] Or be able to change these settings and do a full compilation (slower).
+
+// App name, version and icon
+[pick_ico] Pick your app icon:
+[app_exist] This app already exists.
+[ren_app] Please rename app
+[app_nam] App name:
+[bad_app_nam] Illegal app name
+[app_ver] App version:
+[bad_app_ver] Incorrect version number
+[app_ico] App icon:
+[ico_quali] Icon quality:
+[def_ico] Default icon
+[def_ico_set] Default icon set
+[show_adv] Show advanced options in the next screen ?
+[super] BASIC! flavor used for compilation:
+
+// Advanced options
+[app_dir] App folder
+[bad_app_dir] Not a valid folder name
+[app_cod] Version code
+[bad_app_cod] Not a valid version code\n(must be an integer)
+[perm] Permissions:
+[start_boot] Auto-start app when device boots
+[create_data] Create sdcard/app_name/data
+[create_db] Create sdcard/app_name/databases
+[show_sup_adv] Show super advanced options
+
+// Super advanced options
+[pkg_nam] Package name
+[bad_pkg_nam] Not a valid package name
+[splash] Splash screen / Loading
+[con] Console look and feel
+[reg] Register extension(s)
+[reg_dlg] Type one or more file extensions separated by comas.\nE.g. ".pdf, .txt, .doc"\nYour app will be launched when a user taps such files.
+[bad_reg] Invalid extensions,\nplease try again
+[hw_accel] Activate hardware acceleration
+[mem] Use large Heap memory (64 MB)
+[encrypt] Protect (encrypt) .bas files
+[copy] Copy resources to sdcard
+
+// Splash screen
+[pick_splash] Pick splash screen:
+[splash_time_1] Splash screen time in second
+[splash_time_2] set to 0 for no splash screen
+[bad_time] Not a valid time
+[bgd_col] Background color
+
+// Console
+[has_lines] Lined Console
+[has_menu] Console Menu
+[fnt_col] Font color
+[bgd] Background
+[lin] Lines
+[lin_col] Lines color
+[empty] Empty zone
+[fnt_siz] Font Size
+[fnt_typ] Font Typeface
+[scr_dir] Screen Orientation
+
+// Sum-up
+[ready] Ready to compile:
+[hit_back] Hit Back to make modifications.
+[compile] Compile !
+[app_ver_str] App version string:
+[app_ver_cod] App version code:
+[app_pkg_nam] App package name:
+[app_dir_2] App directory:
+[inc_files] <b>include</b> file(s)
+[res_files] selected <b>resource(s)</b>
+[perm_list] permission(s):
+
+// Compilation
+[unpack] Unpacking project XXX...
+[unpack_ko] Unpacking KO!
+[prepare] Preparing...
+[install] Installing tools...
+[chmod] Installing and Chmoding XXX
+[inst_tool] Installing XXX
+[inst_ko] Installation KO!\nCould not copy to XXX
+[custo] Customizing...
+[modify] Modifying XXX
+[set_icons] Setting icons...
+[copy_bas_res] Copying bas and resources
+[create_r] Creating R.java
+[err_r] Error creating R.java
+[libs] Extracting classes from XXX
+[compiling] Compiling XXX
+[err_compiling] Compilation of XXX failed! Details:
+[classes] Produced XXX classes. Moving them to /bin
+[dex] Dexifying...
+[dex_ko] Dexifying KO!
+[err_dex] Following error was returned:
+[pack] Packaging
+[pack_ko] Packaging KO!
+[add_bin] Adding binaries
+[sign] Signing
+[sign_ko] Signing KO!
+[clean] Cleaning...
+[compile_ok] XXX correctly produced in YYY
+[open_dir] Open its folder
+[install] Install this APK now!

@@ -1,0 +1,173 @@
+﻿// Initialization
+[compiler] Compilator BASIC!
+[no_rfo_1] RFO BASIC! nu a fost detectat pe device-ul tau.
+[no_rfo_2] Il poti instala de la Google Play Store:
+[no_bas_1] Nu exista program BASIC! in <b>rfo-basic/source</b>.
+[no_bas_2] Trebuie sa creezi si sa testezi programele in editorul RFO BASIC! inainte de a le compila.
+[no_img] nicio imagine in rfo-basic/data
+
+// Shared by multiple screens
+[tap_opt] apasare lunga pentru optiuni
+[tap_info] apasare lunga pentru informatii
+[default] Implicit
+[validate] Valideaza schimbarile
+[conflict] Conflict
+[overwrite] Suprascrie
+[exit] Iesire
+[next] Urmator
+[prev] Anterior
+[cancel] Renunta
+[del] Sterge
+[yes] Da
+[no] Nu
+
+// Projects menu
+[new_apk] APK nou
+[pick_among] Alege dintre
+[prog] Program(e)
+[and] si
+[res] Resursa(e)
+[inc] inc.
+[img] Imagine(i)
+[sel_proj] Selecteaza un proiect:
+[del_proj] Sterge acest proiect?
+[last_edit] Editat acum XXX in urma.
+[year] an(i)
+[month] luna(i)
+[day] zi(le)
+[hour] ora(e)
+[minute] minut(e)
+[second] secunda(e)
+[using] Folosind
+[opt] Optiuni:
+[drk-thm] Tema intunecata
+[fast-cp] Permite rapida re-compila
+[log-act] Activati Jurnale
+[log-war] (atentie: poate incetini compilarea)
+[vis-imp] Dedicat permisiunile ecran pentru persoanele cu deficiente de vedere
+[sup-opt] Super Utilizator
+[cust-cert] Certificat personalizat
+[policy] Politica de confidentialitate
+[contact] Contact
+[send-log] Am detectat jurnale dintr-o compilatie anterioara. Doriti sa le impartasiti?
+[translate] Propune / Modifica o traducere
+
+// Select main bas
+[sel_bas] Selecteaza programul principal
+[use_inc] Programul foloseste fisiere incluse?
+[use_res] Programul foloseste alte resurse?
+[has_gw_0] GW Lib
+[has_gw_1] Am detectat ca programul tau foloseste GW lib.
+[has_gw_2] Compilatorul BASIC! va atasa fisierele incluse si resursele corecte automat la proiect.
+[has_gw_3] Fain?
+[has_gw_4] Fain
+[need_bas] Trebuie sa selectezi\n un program principal
+
+// Select include files & resources
+[sel_inc] Selecteaza fisierul(ele) incluse
+[sel_res] Selecteaza resursele
+
+// Fast re-compile
+[fast] Pastrati aceleasi setari ca si ultima compilare si de a face o rapida re-compilare:
+[slow] Sau sa poata modifica aceste setari si de a face ocompilare completa (mai lent).
+
+// App name, version and icon
+[pick_ico] Alege un icon pt. aplicatie:
+[app_exist] Aceasta aplicatie exista deja.
+[ren_app] Redenumiti aplicatia
+[app_nam] Numele aplicatiei:
+[bad_app_nam] Nume ilegal
+[app_ver] Versiune aplicatie:
+[bad_app_ver] Numar versiune incorect
+[app_ico] Icon aplicatie:
+[ico_quali] Calitate icon:
+[def_ico] Icon implicit
+[def_ico_set] Set icon implicit
+[show_adv] Arata optiunile avansate in ecranul urmator?
+[super] BASIC! varianta folosita pentru compilare :
+
+// Advanced options
+[app_dir] Folder aplicatie
+[bad_app_dir] Nume folder invalid
+[app_cod] Cod versiune
+[bad_app_cod] Cod versiune invalid\n(trebuie sa fie intreg)
+[perm] Permisiuni:
+[start_boot] Auto-start aplicatie la pornirea device-ului
+[create_data] Creeaza sdcard/app_name/data
+[create_db] Creeaza sdcard/app_name/databases
+[show_sup_adv] Arata optiunile super avansate
+
+// Super advanced options
+[pkg_nam] nume pachet
+[bad_pkg_nam] Nume pachet invalid
+[splash] Splash screen / Incarcare
+[con] Aspect consola
+[reg] Inregistra extensii
+[reg_dlg] Tastati una sau mai multe extensii de fisiere separate de comas.\nEx. ".pdf, .txt, .doc"\nApp va fi lansat atunci când un utilizator robinete astfel de fisiere.
+[bad_reg] Invalid extensii,\nva rugam sa incercati din nou
+[hw_accel] Activeaza accelerarea hardware
+[mem] Foloseste memorie mare (64 MB)
+[encrypt] Protejeaza (cripteaza) fisierele .bas
+[copy] Copiati resursele la sdcard
+
+// Splash screen
+[pick_splash] Alege splash screen:
+[splash_time_1] Timp splash screen in secunde
+[splash_time_2] seteaza la 0 pentru lipsa splash screen
+[bad_time] Timp invalid
+[bgd_col] Culoare fundal
+
+// Console
+[has_lines] Consola liniata
+[has_menu] Meniul Consola
+[fnt_col] Culoare scris
+[bgd] Fundal
+[lin] Linii
+[lin_col] Culoare linii
+[empty] Zona goala
+[fnt_siz] Marime scris
+[fnt_typ] Tip scris
+[scr_dir] Orientare ecran
+
+// Sum-up
+[ready] Gata de compilare:
+[hit_back] Apasa Back pentru a modifica.
+[compile] Compileaza!
+[app_ver_str] Sir versiune aplicatie:
+[app_ver_cod] Cod versiune aplicatie:
+[app_pkg_nam] Nume pachet aplicatie:
+[app_dir_2] Director aplicatie:
+[inc_files] <b>include</b> file(s)
+[res_files] selectare <b>resursa(e)</b>
+[perm_list] permisiune(i):
+
+// Compilation
+[unpack] Desfacere proiect XXX...
+[unpack_ko] Desfacere KO!
+[prepare] Pregatire...
+[install] Instalare unelte...
+[chmod] Instalare si Chmod-are XXX
+[inst_tool] Instalare XXX
+[inst_ko] Instalare KO!\nNu pot copia la XXX
+[custo] Particularizare...
+[modify] Modificare XXX
+[set_icons] Setare icoane...
+[copy_bas_res] Copiere BAS si resurse
+[create_r] Creare R.java
+[err_r] Eroare creare R.java
+[libs] Extragerea claselor de la XXX
+[compiling] Compilare XXX
+[err_compiling] Compilare la XXX ratata! Detalii:
+[classes] Produse XXX clase. Mutare in /bin
+[dex] Dexificare...
+[dex_ko] Dexificare KO!
+[err_dex] Eroare returnata:
+[pack] Impachetare
+[pack_ko] Impachetare KO!
+[add_bin] Adaugare fisiere binare
+[sign] Semnare
+[sign_ko] Semnare KO!
+[clean] Curatare...
+[compile_ok] XXX produse corect in YYY
+[open_dir] Deschide dosarul sau
+[install] Instalati acest APK acum!

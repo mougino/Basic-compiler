@@ -1,0 +1,32 @@
+package com.rfo.basic;
+
+import java.io.File;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+
+/* Called when creating a launcher shortcut.
+ * 
+ * Code in the Manifest file directs the launcher
+ * here for the create task.
+ * 
+ * Displays the create shortcut form and uses
+ * the results to create the shortcut.
+ * 
+ */
+
+public class LauncherShortcuts extends Activity {
+	public static final String EXTRA_LS_FILENAME = "com.rfo.basic.fn";

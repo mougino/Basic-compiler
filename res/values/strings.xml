@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+*********************************************************************************
+BASIC! is an implementation of the Basic programming language for
+Android devices.
+
+Copyright (C) 2010 - 2015 Paul Laughton
+
+This file is part of BASIC! for Android
+
+    BASIC! is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    BASIC! is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with BASIC!.  If not, see <http://www.gnu.org/licenses/>.
+
+    You may contact the author or current maintainers at http://rfobasic.freeforums.org
+
+**********************************************************************************
+-->
+
+<resources>
+    <!-- For "app_name" and "version" see setup.xml -->
+    <string name="hello">Hello World, BASIC!</string>
+
+    <!-- Activity labels; for "run_name" and "textinput_name" see setup.xml -->
+    <string name="editor_name">BASIC! Program Editor</string>
+    <string name="load_name">BASIC! Load File</string>
+    <string name="delete_name">BASIC! Delete File</string>
+    <string name="help_name">BASIC! Commands</string>
+    <string name="settings_name">BASIC! Preferences</string>
+    <string name="search_name">BASIC! Search</string>
+    <string name="format_name">BASIC! Format</string>
+    <string name="gr_name">Graphics</string>
+    <string name="debug_name">BASIC! Debugger</string>
+    <string name="play_sound_name"> </string>
+    <string name="select_device"> Select Device</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Devices</string>
+
+    <string name="button_scan">Scan</string>
+    <string name="none_found">None Found</string>
+    <string name="scanning">Scanning</string>
+    <string name ="none_paired">No Paired Devices</string>
+    <string name ="web_view_name">Web View</string>
+
+    <string name="intro_getline">BASIC! Shortcut Builder</string>
+    <string name="enter_text_label">Program File Name</string>
+    <string name="edit_button_label">Edit</string>
+    <string name="delete_button_label">Delete</string>
+    <string name="enter_text2_label">Icon File Name</string>
+    <string name="enter_text3_label">Shortcut Name</string>
+
+    <string name="cancel_button_label">Cancel</string>
+    <string name="ok_button_label">OK</string>
+    <string name="yes_button_label">Yes</string>
+    <string name="no_button_label">No</string>
+    <string name="choose_one">Choose one</string>
+    <string name="hex_color">Enter a hex color value</string>
+    <string name="color_chars">0123456789abcdefxABCDEFX#</string>
+
+    <string name="stt_prompt">"BASIC! Speech To Text"</string>
+
+	<!-- Editor menu items -->
+	<string name="run">Run</string>
+	<string name="load">Load</string>
+	<string name="save">Save</string>
+	<string name="delete">Delete</string>
+	<string name="search">Search</string>
+	<string name="format">Format</string>
+	<string name="clear">Clear</string>
+	<string name="load_run">Load and Run</string>
+	<string name="save_run">Save and Run</string>
+	<string name="settings">Preferences</string>
+	<string name="spawn">Create Application</string>
+	<string name="help">Commands</string>
+	<string name="about">About</string>
+	<string name="exit">Exit</string>
+
+	<!-- Console menu items -->
+	<string name="stop">Stop</string>
+	<string name="editor">Editor</string>
+	<string name="pause">Pause</string>
+
+	<!-- Preference options to put Editor menu items on Action Bar -->
+	<string name="pref_MAB_key">editor_items_on_action_bar</string>
+	<string name="pref_MAB_title">Menu Items on Action Bar</string>
+	<string name="pref_MAB_summary">Editor menu items to show on action bar</string>
+	<string name="pref_MAB_run_key">editor_menu_run_on_action_bar</string>
+	<string name="pref_MAB_run_title">RUN on action bar</string>
+	<string name="pref_MAB_run_summary">Show RUN on action bar if it fits</string>
+	<string name="pref_MAB_load_key">editor_menu_load_on_action_bar</string>
+	<string name="pref_MAB_load_title">LOAD on action bar</string>
+	<string name="pref_MAB_load_summary">Show LOAD on action bar if it fits</string>
+	<string name="pref_MAB_save_key">editor_menu_save_on_action_bar</string>
+	<string name="pref_MAB_save_title">SAVE on action bar</string>
+	<string name="pref_MAB_save_summary">Show SAVE on action bar if it fits</string>
+	<string name="pref_MAB_clear_key">editor_menu_clear_on_action_bar</string>
+	<string name="pref_MAB_clear_title">CLEAR on action bar</string>
+	<string name="pref_MAB_clear_summary">Show CLEAR on action bar if it fits</string>
+	<string name="pref_MAB_search_key">editor_menu_search_on_action_bar</string>
+	<string name="pref_MAB_search_title">SEARCH on action bar</string>
+	<string name="pref_MAB_search_summary">Show SEARCH on action bar if it fits</string>
+	<string name="pref_MAB_exit_key">editor_menu_exit_on_action_bar</string>
+	<string name="pref_MAB_exit_title">EXIT on action bar</string>
+	<string name="pref_MAB_exit_summary">Show EXIT on action bar if it fits</string>
+
+	<!-- Shortcut warnings -->
+	<string name="no_prog_name">You have not entered a BASIC! program name.</string>
+	<string name="no_icon_name">You have not entered an icon file name.</string>
+	<string name="no_shortcut_name">You have not entered a name for the shortcut.</string>
+	<string name="no_prog_file">The BASIC! program file does not exist (you can create it later).</string>
+	<string name="no_icon_file">The icon file does not exist.</string>
+	<string name="no_icon">Could not create icon from icon file.</string>
+	<string name="instr_1">Select Cancel to go back to setup</string>
+	<string name="instr_2">or OK to try to create the shortcut anyway.</string>
+
+</resources>
