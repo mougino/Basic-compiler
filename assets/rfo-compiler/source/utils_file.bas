@@ -84,14 +84,6 @@ FN.DEF RecursiveDir(path$, list)
   FILE.DIR path$, all$[], "/"
   ARRAY.LENGTH al, all$[]
   IF al <= 0 THEN FN.RTN 0
-  % New: sort files alphabetically, regardless of case
-  FOR i=1 TO al
-    FOR j=i+1 TO al
-      IF LOWER$(all$[j]) < LOWER$(all$[i])
-        SWAP all$[j], all$[i]
-      ENDIF
-    NEXT
-  NEXT
   % Recurse if there are folders
   FOR i=1 TO al
     IF RIGHT$(all$[i], 1) = "/" THEN
@@ -99,6 +91,22 @@ FN.DEF RecursiveDir(path$, list)
       RecursiveDir(path$ + all$[i], list) %' it's a folder
     ELSE
       LIST.ADD list, path$ + all$[i] %' it's a file
+    ENDIF
+  NEXT
+  FN.RTN 1
+FN.END
+
+FN.DEF RecursiveDirWithoutPaths(path$, list, cut)
+  IF RIGHT$(path$, 1) <> "/" THEN path$ += "/": cut += 1
+  FILE.DIR path$, all$[], "/"
+  ARRAY.LENGTH al, all$[]
+  IF al <= 0 THEN FN.RTN 0
+  % Recurse if there are folders
+  FOR i=1 TO al
+    IF RIGHT$(all$[i], 1) = "/" THEN
+      RecursiveDirWithoutPaths(path$+all$[i], list, cut) %' it's a folder
+    ELSE
+      LIST.ADD list, MID$(path$, cut+1) + all$[i] %' it's a file
     ENDIF
   NEXT
   FN.RTN 1

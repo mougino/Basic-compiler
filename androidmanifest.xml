@@ -29,7 +29,7 @@ This file is part of BASIC! for Android
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rfo.compiler"
-    android:versionCode="1935"
+    android:versionCode="1936"
     android:versionName="01.92" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

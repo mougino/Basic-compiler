@@ -10185,14 +10185,14 @@ public class Run extends Activity {
 					files.add(s);								// else add name without the directory mark
 				}
 			}
-			Collections.sort(dirs);								// Sort the directory list
-			Collections.sort(files);							// Sort the file list
-			dirs.addAll(files);									// copy the file list to end of dir list
+			Collections.sort(dirs, String.CASE_INSENSITIVE_ORDER); // Sort the directory list
+			Collections.sort(files, String.CASE_INSENSITIVE_ORDER); // Sort the file list
+			files.addAll(dirs);									// copy the dir list to end of file list
 		}
-		int length = dirs.size();								// number of directories and files in list
+		int length = files.size();								// number of directories and files in list
 		if (length == 0) { length = 1; }						// make at least one element if dir is empty
 																// it will be an empty string
-		return ListToBasicStringArray(var, dirs, length);		// Copy the list to a BASIC! array
+		return ListToBasicStringArray(var, files, length);		// Copy the list to a BASIC! array
 	}
 
 	private boolean executeGRABFILE() {

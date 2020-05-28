@@ -86,6 +86,9 @@ bsys$ = "../../../../../../.." + sys$
 % Get device language and Android OS version
 DEVICE info
 BUNDLE.GET info, "OS", os$
+i = IS_IN(".", os$)
+i = IS_IN(".", os$, i+1)
+IF i THEN os$ = LEFT$(os$, i-1)
 BUNDLE.GET info, "Locale", lang$
 lang$ = UPPER$(LEFT$(lang$, 2))
 LIST.CREATE s, images

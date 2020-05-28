@@ -48,18 +48,8 @@ ENDIF
 %-------------------------------------------------------------------
 LIST.CLEAR files
 path$ = rfopath$ + "source/"
-ext$  = ".bas"
-RecursiveDir(path$, files)
+RecursiveDirWithoutPaths(path$, files, LEN(path$))
 LIST.SIZE files, nfiles
-FOR i=nfiles TO 1 STEP -1
-  LIST.GET files, i, file$
-  IF RIGHT$(file$, LEN(ext$)) = ext$ % only keep .bas files
-    LIST.REPLACE files, i, MID$(file$, LEN(path$)+1)
-  ELSE
-    LIST.REMOVE files, i
-    nfiles--
-  ENDIF
-NEXT
 
 %-------------------------------------------------------------------
 % Special case: no .bas in source/
@@ -83,51 +73,26 @@ IF !nfiles
   r$ = GW_WAIT_ACTION$()
   IF r$ = "PRIPO" THEN BROWSE "http://mougino.free.fr/com.rfo.compiler_privacy_policy.txt"
   EXIT
+ELSE
+  LIST.TOARRAY files, bas$[]
+  ARRAY.LENGTH nbas, bas$[]
+  DIM chk_bas[nbas]
 ENDIF
-
-%-------------------------------------------------------------------
-% Put source .bas at the start of the list, before subfolder's .bas
-%-------------------------------------------------------------------
-LIST.TOARRAY files, bas$[]
-ARRAY.LENGTH nbas, bas$[]
-DIM chk_bas[nbas]
-FOR i=1 TO nbas
-  FOR j=i+1 TO nbas
-    IF IS_IN("/", bas$[i]) & 0=IS_IN("/", bas$[j])
-      SWAP bas$[i], bas$[j]
-    ELSEIF IS_IN("/", bas$[i]) & IS_IN("/", bas$[j])
-      IF LOWER$(bas$[j]) < LOWER$(bas$[i])
-        SWAP bas$[j], bas$[i]
-      ENDIF
-    ENDIF
-  NEXT
-NEXT
-LIST.CLEAR files
-LIST.ADD.ARRAY files, bas$[]
-LIST.TOARRAY files, bas$[]
 
 %-------------------------------------------------------------------
 % List resources in rfo-basic/data/
 %-------------------------------------------------------------------
 FILE.DIR rfopath$ + "data", res$[], "/"
 ARRAY.LENGTH nres, res$[]
-% New: sort resources alphabetically, regardless of case
-FOR i=1 TO nres
-  FOR j=i+1 TO nres
-    IF LOWER$(res$[j]) < LOWER$(res$[i])
-      SWAP res$[j], res$[i]
-    ENDIF
-  NEXT
-NEXT
 DIM chk_res[nres]    % include resource in app
 DIM cp_startup[nres] % copy resource at startup
 
 %-------------------------------------------------------------------
-% Restrict list of resources to images (to pick icon / splash screen)
+% Build list of images from resource
 %-------------------------------------------------------------------
 LIST.CLEAR images
 FOR i=1 TO nres
-  IF RIGHT$(res$[i], 1) = "/" THEN F_N.CONTINUE % skip folders
+  IF RIGHT$(res$[i], 1) = "/" THEN F_N.BREAK % reached folders > we're out
   k = IS_IN(".", res$[i], -1)
   IF k <= 0 THEN F_N.CONTINUE % skip files w/o extension
   ext$ = LOWER$(MID$(res$[i], k+1))

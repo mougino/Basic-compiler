@@ -110,6 +110,7 @@ GW_MODIFY(android, "src", "ko.png")
 GW_ENABLE(title_btns)
 STOP(REPLACE$(LBL$("inst_ko"), "XXX", sys$)) % Installation KO!\nCould not copy to XXX
 RETURN
+
 InstallResource:
 ARRAY.LENGTH nicos, file_ico$[]
 FOR i=1 TO nicos
