@@ -31,7 +31,7 @@ FILE.DELETE fid, "labels_RO.txt"
 %-------------------------------------------------------------------
 DefConst:
 %-------------------------------------------------------------------
-ARRAY.LOAD tool$[], "+aapt", "android.jar", "cert.x509.pem", "key.pk8"
+ARRAY.LOAD tool$[], "android.jar", "cert.x509.pem", "key.pk8" % "+aapt"
 ARRAY.LOAD con_emptycol$[], "background", "line"
 ARRAY.LOAD con_fntsiz$[], "Small", "Medium", "Large"
 ARRAY.LOAD con_fnttyp$[], "Monospace", "Sans Serif", "Serif"
@@ -82,6 +82,8 @@ supath$ = "../../rfo-super-user/data/"
 FILE.ROOT data$ : data$ += "/"
 sys$ = SYSPATH$() % "/data/data/com.rfo.compiler/" by default
 bsys$ = "../../../../../../.." + sys$
+lpath$ = LIBPATH$()
+blpath$ = "../../../../../../.." + lpath$
 
 % Get device language and Android OS version
 DEVICE info

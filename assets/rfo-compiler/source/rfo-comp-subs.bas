@@ -21,22 +21,28 @@ FILE.DELETE fid, proj$
 RETURN
 
 InstallTools:
-% New 1935: API 10 needs position-independent-executable
-IF VAL(os$) >= 10
-  FILE.DELETE fd, bsys$ + "aapt" % force reinstall of aapt
-  t$ = "aapt-pie"
-  IF log_act THEN DEGUB("    " + REPLACE$(LBL$("chmod"), "XXX", t$))
-  FileCopy(t$, "aapt") % copy from assets/ to sdcard/rfo-compiler/data
-  CopyFromDataToSys("aapt") % then from sdcard to /data/data/com.rfo.compiler
-  GrantExecPerm("aapt")
-  FILE.DELETE fid, "aapt" % delete from sdcard/rfo-compiler/data/
+% New 1937: Google forbids to execute binary in R/W spaces
+FILE.DELETE fd, bsys$ + "aapt" % remove aapt from {privateSpace}
+% New 1940: force aapt-pie when os$ < 10 is wrongly detected
+FILE.EXISTS pieonly, bsys$ + "force.pie"
+saa = GetSize(blpath$ + "lib_aapt.so")     % system' aapt size
+sap = GetSize(blpath$ + "lib_aapt-pie.so") % system' aapt-pie size
+IF log_act
+  DEGUB("    Size of 'lib_aapt.so': " + Sz$(saa))
+  DEGUB("    Size of 'lib_aapt-pie.so': " + Sz$(sap))
+  DEGUB("    Force position-independant executable: " + TrueFalse$(pieonly))
+ENDIF
+IF pieonly | VAL(os$) >= 10 % Android 5.0 and later only support position-independant executables
+  aapt$ = DQ$(lpath$ + "lib_aapt-pie.so")
+ELSE
+  aapt$ = DQ$(lpath$ + "lib_aapt.so")
 ENDIF
 % New 1921: build against API >= 27 needs a new android.jar
 aas = GetSize("android.jar")         % assets' android.jar size
 sas = GetSize(bsys$ + "android.jar") % system' android.jar size
 IF log_act
-  DEGUB("    Assets 'android.jar' size: " + Sz$(aas))
-  DEGUB("    System 'android.jar' size: " + Sz$(sas))
+  DEGUB("    Size of Assets 'android.jar': " + Sz$(aas))
+  DEGUB("    Size of System 'android.jar': " + Sz$(sas))
 ENDIF
 IF sas <> aas
   FILE.DELETE fd, bsys$ + "android.jar" % force reinstall of 'android.jar'
@@ -53,7 +59,8 @@ FILE.EXISTS custom_pk8_provided, "key.pk8"
 FOR i=1 TO ntools
   IF (custom_pem_provided & custom_pk8_provided) & ~
      (tool$[i] = "cert.x509.pem" | tool$[i] = "key.pk8") THEN  % Custom certificate
-    GW_MODIFY(pgb_compil, "text", REPLACE$(LBL$("inst_tool"), "XXX", tool$[i] + " (custom)")) % Installing XXX (custom)
+    e$ = REPLACE$(LBL$("inst_tool"), "XXX", tool$[i] + " (custom)")
+    GW_MODIFY(pgb_compil, "text", e$) % Installing XXX (custom)
     FILE.DELETE fid, bsys$ + tool$[i] % delete any existing cert
     CopyFromDataToSys(tool$[i])       % copy it from sdcard to /data/data/com.rfo.compiler
   ELSEIF !SysExist(tool$[i])
@@ -63,22 +70,11 @@ FOR i=1 TO ntools
       GW_MODIFY(pgb_compil, "text", LBL$("install")) % Installing tools...
     ENDIF
     fe = 0 % assume tool doesn't exist on sdcard beforehand
-    IF LEFT$(tool$[i],1) = "+"
-      tool$[i] = MID$(tool$[i],2)
-      GW_MODIFY(pgb_compil, "text", REPLACE$(LBL$("chmod"), "XXX", tool$[i]))  % Installing and Chmoding XXX
-      t$ = tool$[i]
-      IF t$ = "aapt" & VAL(os$) >= 5.0 THEN t$ = "aapt-pie" % Lollipop needs position-independent-executable
-      IF log_act THEN DEGUB("    " + REPLACE$(LBL$("chmod"), "XXX", t$))
-      FileCopy(t$, tool$[i]) % copy from assets/ to sdcard/rfo-compiler/data
-      CopyFromDataToSys(tool$[i]) % then from sdcard to /data/data/com.rfo.compiler
-      GrantExecPerm(tool$[i])
-    ELSE
-      GW_MODIFY(pgb_compil, "text", REPLACE$(LBL$("inst_tool"), "XXX", tool$[i])) % Installing XXX
-      IF log_act THEN DEGUB("    " + REPLACE$(LBL$("inst_tool"), "XXX", tool$[i]))
-      FILE.EXISTS fe, tool$[i]
-      IF !fe THEN FileCopy(tool$[i], tool$[i]) % copy from assets/ to sdcard/rfo-compiler/data
-      CopyFromDataToSys(tool$[i]) % then from sdcard to /data/data/com.rfo.compiler
-    ENDIF
+    GW_MODIFY(pgb_compil, "text", REPLACE$(LBL$("inst_tool"), "XXX", tool$[i])) % Installing XXX
+    IF log_act THEN DEGUB("    " + REPLACE$(LBL$("inst_tool"), "XXX", tool$[i]))
+    FILE.EXISTS fe, tool$[i]
+    IF !fe THEN FileCopy(tool$[i], tool$[i]) % copy from assets/ to sdcard/rfo-compiler/data
+    CopyFromDataToSys(tool$[i]) % then from sdcard to /data/data/com.rfo.compiler
     IF !fe THEN FILE.DELETE fid, tool$[i] % delete from sdcard/rfo-compiler/data/
     IF !SysExist(tool$[i])
       GW_MODIFY(android, "src", "ko.png")
@@ -102,6 +98,22 @@ IF sas <> aas
   sas = GetSize(bsys$ + "android.jar") % system' android.jar size
   IF sas <> aas THEN GOTO AndroidJarErr
 ENDIF
+RETURN
+
+DumpPrivateSpace:
+TEXT.OPEN w, fid, "private.log"
+TIME y$, m$, d$, h$, mn$, s$
+t$="["+y$+m$+d$+"-"+h$+mn$+s$+"] "
+TEXT.WRITELN fid, t$+" Dumping files in private space "+sys$
+LIST.CLEAR 1
+RecursiveDir(bsys$, 1)
+LIST.SIZE 1, n
+FOR i=1 TO n
+  LIST.GET 1, i, f$
+  TEXT.WRITELN fid, INT$(i) + ". " + REPLACE$(f$,bsys$,"")
+NEXT
+TEXT.CLOSE fid
+LIST.CLEAR 1
 RETURN
 
 AndroidJarErr:

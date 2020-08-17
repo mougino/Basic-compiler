@@ -52,7 +52,9 @@ IF log_act
   DEGUB(e$)
   DEGUB("OS version " + os$)
   DEGUB("Locale: " + lang$)
-  DEGUB("00. Clean any previous project...")
+  DEGUB("SysPath: " + SYSPATH$())
+  DEGUB("LibPath: " + LIBPATH$())
+  DEGUB("00. Clean any previous project & install tools...")
 ENDIF
 appdir$ = ResolveDiacritics$(appdir$) % remove unicode characters in app folder
 appbas2$ = ResolveDiacritics$(appbas$) % xml-safe version of main .bas name
@@ -356,7 +358,7 @@ FOR i=1 TO nfiles
     GW_MODIFY(android, "src", "ko.png")
     GW_ENABLE(title_btns)
     e$ = REPLACE$(LBL$("err_compiling"), "XXX", f$) + "\n" + err$ % Compilation of XXX failed! Details:
-    IF log_act THEN DEGUB("    Error: compilation failed!\n"+err$)
+    IF log_act THEN DEGUB("    Error: compilation failed\n"+err$)
     STOP(e$)
   ENDIF
   GW_SET_PROGRESSBAR(pgb_compil, tot + i/nfiles*30) % -> 23 to 53 %
@@ -423,7 +425,7 @@ IF LEN(TRIM$(err$)) & err$ <> "No error"
   GW_MODIFY(android, "src", "ko.png")
   GW_ENABLE(title_btns)
   e$ = LBL$("err_dex") + "\n" + err$ % Following error was returned:
-  IF log_act THEN DEGUB("    Error: dexifying failed!\n"+err$)
+  IF log_act THEN DEGUB("    Error: dexifying failed\n"+err$)
   STOP(e$)
 ENDIF
 
@@ -431,7 +433,7 @@ FILE.EXISTS dex, "classes.dex"
 IF !dex
   GW_MODIFY(android, "src", "ko.png")
   GW_ENABLE(title_btns)
-  IF log_act THEN DEGUB("    Error: classes.dex not found!")
+  IF log_act THEN DEGUB("    Error: could not create classes.dex")
   STOP(LBL$("dex_ko")) % Dexifying KO!
 ENDIF
 FileCopy("classes.dex", apppkg$ + ".dex")
@@ -449,13 +451,14 @@ PackageUnsigned:
 GW_MODIFY(pgb_compil, "text", LBL$("pack")) % Packaging
 IF log_act THEN DEGUB("06. Package all components into temp-unsigned.apk with aapt package -f")
 
-cmd$  = sys$ + "aapt package -f"
+cmd$  = aapt$ + " package -f"
 cmd$ += " -M " + DQ$(data$ + prj$ + "AndroidManifest.xml")
 cmd$ += " -S " + DQ$(data$ + res$)
 cmd$ += " -A " + DQ$(data$ + ast$)
 cmd$ += " -F " + DQ$(data$ + "temp-unsigned.apk")
 cmd$ += " -I " + DQ$(sys$ + "android.jar")
 SHELL(cmd$)
+IF log_act & LEN(SYSLOG$()) THEN DEGUB("    " + TRIM$(SYSLOG$()))
 
 DO : r$ = GW_ACTION$() : UNTIL r$ = "" % read (and ignore) user input during compilation
 
@@ -466,14 +469,17 @@ GOSUB DblCheckUnsignedApk
 IF !unsigned % Backup Strat: package part of the apk with appt, part with the zip command
   IF log_act THEN DEGUB("    Backup strat! Package everything EXCEPT assets data with aapt package -f")
   DelRecursivePath(ast$+appdir$+"/data/", files, 1) % 1 = del assets data folder
-  cmd$  = sys$ + "aapt package -f"
+  cmd$  = aapt$ + " package -f"
   cmd$ += " -M " + DQ$(data$ + prj$ + "AndroidManifest.xml")
   cmd$ += " -S " + DQ$(data$ + res$)
   cmd$ += " -A " + DQ$(data$ + ast$)
   cmd$ += " -F " + DQ$(data$ + "temp.apk")
   cmd$ += " -I " + DQ$(sys$ + "android.jar")
   SHELL(cmd$)
-  IF log_act THEN DEGUB("    Success! Now add assets with the ZIP command...")
+  IF log_act
+    DEGUB("    " + SYSLOG$())
+    DEGUB("    Now add assets with the ZIP command...")
+  ENDIF
   GOSUB CopyAssetsData % put assets data back
   DelRecursivePath(src$, files, 1) % 1 = del src$ folder from 'prj$'
   DelRecursivePath(lib$, files, 1) % 1 = del lib$ folder from 'prj$'
@@ -489,24 +495,49 @@ ENDIF
 
 BadPackage:
 IF !unsigned
-  IF log_act THEN DEGUB("    Error: rfo-compiler/data/temp-unsigned.apk not found!")
+  IF log_act THEN DEGUB("    Error: could not create unsigned apk")
   GW_MODIFY(android, "src", "ko.png")
   GW_ENABLE(title_btns)
   STOP(LBL$("pack_ko") + "\n" + SYSLOG$()) % Packaging KO!
 ENDIF
+PAUSE 250 % (1937)
 %===================================================================
 
 %============================= STEP 07 =============================
 GW_MODIFY(pgb_compil, "text", LBL$("add_bin")) % Adding binaries
-IF log_act THEN DEGUB("07. Add binaries to temp-unsigned.apk with aapt add -f")
+IF log_act THEN DEGUB("07. Add classes.dex to temp-unsigned.apk with aapt add -f")
 
 FileCopy("classes.dex", "../classes.dex")
-cmd$  = sys$ + "aapt add -f "
+
+cmd$  = aapt$ + " add -f "
 cmd$ += DQ$(data$ + "temp-unsigned.apk")
 cmd$ += " classes.dex"
 SHELL(cmd$)
+IF log_act & LEN(SYSLOG$()) THEN DEGUB("    " + TRIM$(SYSLOG$()))
+
+% Check if 'classes.dex' is in temp-unsigned.apk
+ZIP.DIR "temp-unsigned.apk", zip$[], "/"
+ARRAY.SEARCH zip$[], "classes.dex", found
+IF !found
+  IF log_act THEN DEGUB("    Backup strat: add classes.dex with jar command")
+  cmd$  = "jar -uf "
+  cmd$ += DQ$(data$ + "temp-unsigned.apk") + " -C "
+  cmd$ += DQ$(data$)
+  cmd$ += " classes.dex"
+  SHELL(cmd$)
+  IF log_act & LEN(SYSLOG$()) THEN DEGUB("    " + TRIM$(SYSLOG$()))
+  ZIP.DIR "temp-unsigned.apk", zip$[], "/"
+  ARRAY.SEARCH zip$[], "classes.dex", found
+  IF !found
+    IF log_act THEN DEGUB("    Error: could not add  classes.dex to unsigned apk")
+    GW_MODIFY(android, "src", "ko.png")
+    GW_ENABLE(title_btns)
+    STOP(LBL$("pack_ko") + "\n" + SYSLOG$()) % Packaging KO!
+  ENDIF
+ENDIF
 
 FILE.DELETE fid, "../classes.dex"
+FILE.DELETE fid, "classes.dex"
 
 DO : r$ = GW_ACTION$() : UNTIL r$ = "" % read (and ignore) user input during compilation
 
@@ -529,7 +560,7 @@ IF !final
   GW_MODIFY(android, "src", "ko.png")
   GW_ENABLE(title_btns)
   err$=GETERROR$()
-  IF log_act THEN DEGUB("    Error: temp.apk not found!\n"+err$)
+  IF log_act THEN DEGUB("    Error: could not sign apk\n"+err$)
   STOP(LBL$("sign_ko") + "\n" + err$) % Signing KO!
 ENDIF
 %===================================================================

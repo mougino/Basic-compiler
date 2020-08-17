@@ -27,18 +27,7 @@ IF !rfo
   GW_RENDER(pg_no_rfo)
 
   r$ = GW_WAIT_ACTION$()
-  IF r$ = "LNK"
-    basapk$ = "BASIC_1923.apk"
-    MAKE_SURE_IS_ON_SD(basapk$)
-    FILE.ROOT e$ % try old installation method (older devices)
-    e$ = "file://" + e$ + "/" + basapk$
-    APP.START "android.intent.action.INSTALL_PACKAGE", e$ ,,, "*/*",,, HEX("10000000") % FLAG_ACTIVITY_NEW_TASK
-    err$=GETERROR$()
-    IF err$ <> "No error" % old method didnt'work --> try new method (unknown source apks permission request)
-      InstallApk(basapk$)
-      err$=GETERROR$() : IF err$ <> "No error" THEN POPUP err$
-    ENDIF
-  ENDIF
+  IF r$ = "LNK" THEN BROWSE "https://play.google.com/store/apps/details?id=com.rfo.Basic"
   IF r$ = "PRIPO" THEN BROWSE "http://mougino.free.fr/com.rfo.compiler_privacy_policy.txt"
   EXIT
 ENDIF
