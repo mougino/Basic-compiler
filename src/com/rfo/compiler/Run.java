@@ -1114,6 +1114,7 @@ public class Run extends Activity {
 	private static final String SF_USING = "using$(";
 	private static final String SF_VERSION = "version$(";
 	private static final String SF_VERSIONX = "versionx$(";
+	private static final String SF_LIBPATH = "libpath$(";
 	private static final String SF_SYSPATH = "syspath$(";
 	private static final String SF_WORD = "word$(";
 
@@ -1124,7 +1125,7 @@ public class Run extends Activity {
 		SF_LTRIM, SF_MID, SF_OCT, SF_REPLACE,
 		SF_RIGHT, SF_RTRIM, SF_STR, SF_TRIM,
 		SF_UPPER, SF_USING, SF_WORD, SF_VERSION,
-    	SF_VERSIONX, SF_SYSPATH,
+    	SF_VERSIONX, SF_SYSPATH, SF_LIBPATH,
 	};
 
 	private static final int TLEFT = 1;					// control bits for SF_TRIM
@@ -4354,6 +4355,7 @@ public class Run extends Activity {
 		new Command(SF_USING)                   { public boolean run() { return executeSF_USING(); } },
 		new Command(SF_VERSION)                 { public boolean run() { return executeSF_VERSION(); } },
 		new Command(SF_VERSIONX)                { public boolean run() { return executeSF_VERSIONX(); } },
+		new Command(SF_LIBPATH)                 { public boolean run() { return executeSF_LIBPATH(); } },
 		new Command(SF_SYSPATH)                 { public boolean run() { return executeSF_SYSPATH(); } },
 		new Command(SF_WORD)                    { public boolean run() { return executeSF_WORD(); } },
 	};
@@ -7121,6 +7123,16 @@ public class Run extends Activity {
     try {
       PackageInfo pi = getContext().getPackageManager().getPackageInfo(getPackageName(), 0);
       StringConstant = String.valueOf(pi.versionCode);
+    } catch (PackageManager.NameNotFoundException e) {}
+		return true;
+	}
+
+	private boolean executeSF_LIBPATH() {												// LIBPATH$
+		if (!isNext(')'))				return false;	// Function must end with ')'
+    try {
+      StringConstant = getContext().getPackageManager().getApplicationInfo( 
+                       getPackageName(), PackageManager.GET_SHARED_LIBRARY_FILES)
+                       .nativeLibraryDir + "/";
     } catch (PackageManager.NameNotFoundException e) {}
 		return true;
 	}
