@@ -327,8 +327,10 @@ ENDIF
 %============================= STEP 03 =============================
 GW_MODIFY(pgb_compil, "text", LBL$("create_r")) % Creating R.java
 IF log_act THEN DEGUB("03. Create R.java with aapt package -m")
+rjavaretry = 0
 
-cmd$  = sys$ + "aapt package -m"
+rjavacreation:
+cmd$  = aapt$ + " package -m"
 cmd$ += " -J " + DQ$(data$ + src$)
 cmd$ += " -M " + DQ$(data$ + prj$ + "AndroidManifest.xml")
 cmd$ += " -S " + DQ$(data$ + res$)
@@ -339,10 +341,20 @@ GW_SET_PROGRESSBAR(pgb_compil, ++tot) % -> 23 %
 
 FILE.EXISTS R, src$ + pkg$ + "R.java"
 IF !R
-  IF log_act THEN DEGUB("    Error: "+src$+pkg$+"R.java not found!\n"+SYSLOG$())
+  sl$ = SYSLOG$()
+  IF IS_IN("fPIE", sl$) & !rjavaretry
+    rjavaretry = 1
+    TEXT.OPEN w, fid, bsys$ + "force.pie"
+    TEXT.CLOSE fid
+    aapt$ = DQ$(lpath$ + "lib_aapt-pie.so")
+    GW_SET_PROGRESSBAR(pgb_compil, --tot)
+    IF log_act THEN DEGUB("    " + sl$ + "\n    Forcing aapt-pie and re-trying...")
+    GOTO rjavacreation
+  ENDIF
+  IF log_act THEN DEGUB("    Error: could not create R.java\n" + sl$)
   GW_MODIFY(android, "src", "ko.png")
   GW_ENABLE(title_btns)
-  STOP(LBL$("err_r") + "\n" + SYSLOG$()) % Error creating R.java
+  STOP(LBL$("err_r") + "\n" + sl$) % Error creating R.java
 ENDIF
 %===================================================================
 
