@@ -170,7 +170,6 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
-import android.os.StrictMode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -179,8 +178,6 @@ import android.os.Vibrator;
 import android.os.SystemClock;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
-import android.telephony.SubscriptionManager;
-import android.telephony.SubscriptionInfo;
 import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
@@ -2374,11 +2371,7 @@ public class Run extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-		// ignore URI exposure for API >= 24
-    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-    StrictMode.setVmPolicy(builder.build());
-
-    super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);
 		Log.v(LOGTAG, "onCreate " + this.toString());
 
 		if (Basic.lines == null) {
@@ -7726,65 +7719,64 @@ public class Run extends Activity {
     }
   };
 
-
   // JAVAC: compile a .java to a .class
 	private boolean executeJAVAC() {
     clearErrorMsg();
 
-    if (!getStringArg()) return false;
-    String javafile = StringConstant;
-    if (!isNext(')'))	return false;	// Function must end with ')'
-    if (!isEOL()) 		return false;
+	if (!getStringArg()) return false;
+	String javafile = StringConstant;
+	if (!isNext(')'))	return false;	// Function must end with ')'
+	if (!isEOL()) 		return false;
 
-    // throw error if java file is not in a subfolder of /src
-    if (javafile.indexOf("/src") < 0)
-      return RunTimeError("Bad Android project: java file must be in /src at:");
+	// throw error if java file is not in a subfolder of /src
+	if (javafile.indexOf("/src") < 0)
+	  return RunTimeError("Bad Android project: java file must be in /src at:");
 
-    // add /data/data/<package_name>/android.jar to the classpath
-    String classpath = getContext().getFilesDir().getParent() + "/android.jar";
+	// add /data/data/<package_name>/android.jar to the classpath
+	String classpath = getContext().getFilesDir().getParent() + "/android.jar";
 
-    // include Java project /src folder in the classpath
-    classpath += ":" + javafile.substring(0, javafile.lastIndexOf("/src") + 4);
+	// include Java project /src folder in the classpath
+	classpath += ":" + javafile.substring(0, javafile.lastIndexOf("/src") + 4);
 
-    // dynamically list jars in /libs folder and add each of them to both classpath and jarpath
-    String libpath = javafile.substring(0, javafile.lastIndexOf("/src")) + "/libs";
-    String jarpath = new String();
-    File[] file = new File(libpath).listFiles();
-    if (null != file) {
-      for (File f : file) {
-      if (f.isFile() && f.getName().endsWith(".jar"))
-        jarpath = libpath + "/" + f.getName() + ((jarpath.length()>0)?":":"") + jarpath;
-        classpath = libpath + "/" + f.getName() + ":" + classpath;
-      }
-    }
+	// dynamically list jars in /libs folder and add each of them to both classpath and jarpath
+	String libpath = javafile.substring(0, javafile.lastIndexOf("/src")) + "/libs";
+	String jarpath = new String();
+	File[] file = new File(libpath).listFiles();
+	if (null != file) {
+	  for (File f : file) {
+		if (f.isFile() && f.getName().endsWith(".jar"))
+		  jarpath = libpath + "/" + f.getName() + ((jarpath.length()>0)?":":"") + jarpath;
+		  classpath = libpath + "/" + f.getName() + ":" + classpath;
+	  }
+	}
 
-    Log.d(LOGTAG, "Compiling " + javafile + " with bootclasspath: " + jarpath);
+	Log.d(LOGTAG, "Compiling " + javafile + " with bootclasspath: " + jarpath);
 
-    org.eclipse.jdt.internal.compiler.batch.Main ecjMain
-      = new org.eclipse.jdt.internal.compiler.batch.Main(
-        new PrintWriter(System.out),
-        new PrintWriter(errorOutputStream), /* pipe any error to our custom OutputStream */
-        false, /* no system exit */
-        null
-      );
+	org.eclipse.jdt.internal.compiler.batch.Main ecjMain
+	  = new org.eclipse.jdt.internal.compiler.batch.Main(
+			new PrintWriter(System.out),
+			new PrintWriter(errorOutputStream), /* pipe any error to our custom OutputStream */
+			false, /* no system exit */
+			null
+		);
 
-    ecjMain.compile(new String[] {
-      "-source", "1.5",
-      "-target", "1.5",
-      "-Xlint:all", "-nowarn", /* remove all warnings */
-      "-classpath", classpath,
-      "-extdirs", libpath,		/* cross-compile option */
-      "-bootclasspath", ((jarpath.length()>0)?jarpath:libpath),	/* cross-compile option */
-      javafile
-    });
+	ecjMain.compile(new String[] {
+		"-source", "1.5",
+		"-target", "1.5",
+		"-Xlint:all", "-nowarn", /* remove all warnings */
+		"-classpath", classpath,
+		"-extdirs", libpath,		/* cross-compile option */
+		"-bootclasspath", ((jarpath.length()>0)?jarpath:libpath),	/* cross-compile option */
+		javafile
+	});
 
-    // Finally retrieve any error from our custom OutputStream
-    // and put it in the String returned by GetError$() function
-    String errLog = errorOutputStream.toString();
-    if (0 != errLog.length()) writeErrorMsg( errLog );
+	// Finally retrieve any error from our custom OutputStream
+	// and put it in the String returned by GetError$() function
+	String errLog = errorOutputStream.toString();
+	if (0 != errLog.length()) writeErrorMsg( errLog );
 
-    return true;
-  }
+	return true;
+}
 
   // InstallApk: install apk + show request to allow installation from unknown sources if needed
   private boolean executeInstallApk() {
@@ -10984,13 +10976,6 @@ public class Run extends Activity {
 
 		Locale loc = Locale.getDefault();
 		TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
-		List<SubscriptionInfo> sl = null;
-
-    if (Build.VERSION.SDK_INT >= 22) { // Starting Lolipop MR1
-        SubscriptionManager sm = (SubscriptionManager) getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
-        sl = sm.getActiveSubscriptionInfoList();
-    }
-
 		String failMsg = "Not available";
 		String[] keys = {
 			"Brand", "Model", "Device", "Product", "OS",
@@ -10998,19 +10983,11 @@ public class Run extends Activity {
 			"PhoneType", "PhoneNumber", "DeviceID",
 			"SIM SN", "SIM MCC/MNC", "SIM Provider"
 		};
-
-		String simSN;
-		if (Build.VERSION.SDK_INT < 22) { // Before Lolipop MR1
-			simSN = getSimSN(tm, failMsg);
-		} else {
-			simSN = getSimSN(sl, failMsg);
-		}
-
 		String[] vals = {
 			Build.BRAND, Build.MODEL, Build.DEVICE, Build.PRODUCT, Build.VERSION.RELEASE,
 			loc.getDisplayLanguage(), loc.toString(),
 			getPhoneType(tm), getPhoneNumber(tm, failMsg),
-			getDeviceID(tm, failMsg), simSN,
+			getDeviceID(tm, failMsg), getSimSN(tm, failMsg),
 			getSimOperator(tm, failMsg), getSimOpName(tm, failMsg)
 		};
 
@@ -17698,15 +17675,7 @@ public class Run extends Activity {
 
 	private String getDeviceID(TelephonyManager tm, String failMsg) {
 		if (tm == null) { tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); }
-		String id;
-		if (Build.VERSION.SDK_INT < 29) {
-		  id = (tm != null) ? tm.getDeviceId() : null;
-		} else {
-		  id = (tm != null) ? android.provider.Settings.Secure.getString(
-								getContext().getContentResolver(),
-								android.provider.Settings.Secure.ANDROID_ID)
-							: null;
-		}
+		String id = (tm != null) ? tm.getDeviceId() : null;
 		return (id != null) ? id : failMsg;
 	}
 
@@ -17755,7 +17724,7 @@ public class Run extends Activity {
 		return (tm != null) ? tm.getSimState() : TelephonyManager.SIM_STATE_UNKNOWN;
 	}
 
-	private String getSimSN(TelephonyManager tm, String failMsg) { // for API < 22
+	private String getSimSN(TelephonyManager tm, String failMsg) {
 		if (tm == null) { tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); }
 		String sn = failMsg;
 		if (tm != null) {
@@ -17764,18 +17733,6 @@ public class Run extends Activity {
 			else if (state == TelephonyManager.SIM_STATE_READY) {
 				String realSN = tm.getSimSerialNumber();
 				if (realSN != null) { sn = realSN; }
-			}
-		}
-		return sn;
-	}
-
-	private String getSimSN(List<SubscriptionInfo> sl, String failMsg) {	// for API >= 22
-		String sn = failMsg;
-		if (sl != null) {
-			for (SubscriptionInfo subsInfo : sl) {
-				if (subsInfo != null) {
-					sn  = subsInfo.getIccId();
-				}
 			}
 		}
 		return sn;
