@@ -56,6 +56,7 @@ import java.security.spec.KeySpec;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+
 public class Basic extends Activity {
 
 	private static final String LOGTAG = "Basic";
@@ -119,7 +120,7 @@ public class Basic extends Activity {
 				}
 				break;
 			default:
-				//super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+				super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
 	}
 
@@ -225,7 +226,7 @@ public class Basic extends Activity {
 		super.onCreate(savedInstanceState);					// Set up of fresh start
 		Log.v(LOGTAG, "onCreate: " + this);
 
-    initVars();
+		initVars();
 		Settings.setDefaultValues(this, isAPK);				// if isAPK, force to default settings
 
 		defaultTextStyle = new TextStyle();
@@ -243,7 +244,6 @@ public class Basic extends Activity {
 	// Added March, 2019, by Nicolas Mougin. Permissions management required for Android 6+.
 	private boolean permissionsGranted() {
 		String[] manifestPermissions = getPermissionsFromManifest(getApplicationContext());
-		if (null==manifestPermissions || manifestPermissions.length<=0) return true; // special case: apk with no permission
 		// Log.v(LOGTAG, "Need permissions: " + Arrays.toString(manifestPermissions));
 		for (String perm: manifestPermissions) {
 			if (perm.equals("android.permission.ACCESS_MOCK_LOCATION")) { continue; } // don't request this permission (crash)

@@ -132,7 +132,7 @@ This file is part of BASIC! for Android
 								for Android\ncreated by Paul Laughton.\n\nTo
 								learn more about BASIC!,\nselect one of the following:</string>
 	<!-- About button text -->
-	<string name="about_text_btn_home">BASIC! ホームページ</string>
+	<string name="about_text_btn_manual">BASIC! ホームページ</string>
 	<string name="about_text_btn_forum">BASIC! ユーザーフォーラム</string>
 	<string name="about_text_btn_programs">BASIC! ユーザーのプログラム\nユーザーフォーラムメンバーによって作られたプログラム</string>
 	<string name="about_text_btn_bintray">BASIC! on Bintray\nマニュアル、 apkファイル、リリースノート</string>

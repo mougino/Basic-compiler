@@ -1,82 +1,5 @@
 import com.rfo.basic.notify.NotifyClassic;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.Flushable;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.ShortBuffer;
-import java.nio.channels.FileChannel;
-import java.security.InvalidParameterException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.Set;
-import java.util.Stack;
-import java.util.TimeZone;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
-import java.util.regex.PatternSyntaxException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
-import java.util.zip.ZipOutputStream;
-
-import javax.crypto.Cipher;
-
-import org.apache.commons.net.ftp.FTP;
-import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPReply;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.BasicResponseHandler;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
-import org.apache.http.util.ByteArrayBuffer;
-
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -128,6 +51,7 @@ import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.os.StrictMode;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -145,6 +69,8 @@ import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.telephony.cdma.CdmaCellLocation;
 import android.telephony.gsm.GsmCellLocation;
+import android.telephony.SubscriptionManager;
+import android.telephony.SubscriptionInfo;
 import android.text.ClipboardManager;
 import android.text.format.Time;
 import android.util.AttributeSet;
@@ -2301,7 +2227,11 @@ public class Run extends Activity {
 	
 	public void onCreate(Bundle savedInstanceState) {
 
-		super.onCreate(savedInstanceState);
+		// ignore URI exposure for API >= 24
+    StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+    StrictMode.setVmPolicy(builder.build());
+
+    super.onCreate(savedInstanceState);
 		Log.v(LOGTAG, "onCreate " + this.toString());
 
 		if (Basic.lines == null) {
@@ -10707,7 +10637,15 @@ public class Run extends Activity {
 		Var.Val val = mVal;
 
 		Locale loc = Locale.getDefault();
+		
 		TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+		List<SubscriptionInfo> sl = null;
+
+        if (Build.VERSION.SDK_INT >= 22) { // Starting Lolipop MR1
+            SubscriptionManager sm = (SubscriptionManager) getSystemService(Context.TELEPHONY_SUBSCRIPTION_SERVICE);
+            sl = sm.getActiveSubscriptionInfoList();
+        }
+
 		String failMsg = "Not available";
 		String[] keys = {
 			"Brand", "Model", "Device", "Product", "OS",
@@ -10715,11 +10653,17 @@ public class Run extends Activity {
 			"PhoneType", "PhoneNumber", "DeviceID",
 			"SIM SN", "SIM MCC/MNC", "SIM Provider"
 		};
-		String[] vals = {
+		String simSN;
+		if (Build.VERSION.SDK_INT < 22) { // Before Lolipop MR1
+			simSN = getSimSN(tm, failMsg);
+		} else {
+			simSN = getSimSN(sl, failMsg);
+		}
+        String[] vals = {
 			Build.BRAND, Build.MODEL, Build.DEVICE, Build.PRODUCT, Build.VERSION.RELEASE,
 			loc.getDisplayLanguage(), loc.toString(),
 			getPhoneType(tm), getPhoneNumber(tm, failMsg),
-			getDeviceID(tm, failMsg), getSimSN(tm, failMsg),
+			getDeviceID(tm, failMsg), simSN,
 			getSimOperator(tm, failMsg), getSimOpName(tm, failMsg)
 		};
 
@@ -17469,7 +17413,15 @@ public class Run extends Activity {
 
 	private String getDeviceID(TelephonyManager tm, String failMsg) {
 		if (tm == null) { tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); }
-		String id = (tm != null) ? tm.getDeviceId() : null;
+		String id;
+		if (Build.VERSION.SDK_INT < 29) {
+		  id = (tm != null) ? tm.getDeviceId() : null;
+		} else {
+		  id = (tm != null) ? android.provider.Settings.Secure.getString(
+								getContext().getContentResolver(),
+								android.provider.Settings.Secure.ANDROID_ID)
+							: null;
+		}
 		return (id != null) ? id : failMsg;
 	}
 
@@ -17518,7 +17470,7 @@ public class Run extends Activity {
 		return (tm != null) ? tm.getSimState() : TelephonyManager.SIM_STATE_UNKNOWN;
 	}
 
-	private String getSimSN(TelephonyManager tm, String failMsg) {
+	private String getSimSN(TelephonyManager tm, String failMsg) { // for API < 22
 		if (tm == null) { tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE); }
 		String sn = failMsg;
 		if (tm != null) {
@@ -17527,6 +17479,18 @@ public class Run extends Activity {
 			else if (state == TelephonyManager.SIM_STATE_READY) {
 				String realSN = tm.getSimSerialNumber();
 				if (realSN != null) { sn = realSN; }
+			}
+		}
+		return sn;
+	}
+
+	private String getSimSN(List<SubscriptionInfo> sl, String failMsg) {	// for API >= 22
+		String sn = failMsg;
+		if (sl != null) {
+			for (SubscriptionInfo subsInfo : sl) {
+				if (subsInfo != null) {
+					sn  = subsInfo.getIccId();
+				}
 			}
 		}
 		return sn;
