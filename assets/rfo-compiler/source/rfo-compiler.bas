@@ -74,7 +74,16 @@ IF spr_usr & LEN(appfla$) & appfla$ <> flav$[1]   % custom flavor
   pkg$ = REPLACE$(pkg$, ".", "/") + "/"
 ELSE                              % standard RFO BASIC flavor
   prj$ = "Basic-" + ver$ + "/"    % folder of project to compile in sdcard/rfo-compiler/data
-  pkg$ = "com/rfo/basic/"
+  TEXT.OPEN r, fid, prj$ + "AndroidManifest.xml"
+  IF fid < 0 THEN END "Fatal error opening " + prj$ + "AndroidManifest.xml"
+  DO
+    TEXT.READLN fid, e$
+  UNTIL IS_IN("package=", e$)
+  TEXT.CLOSE fid
+  i = IS_IN(CHR$(34), e$) + 1
+  j = IS_IN(CHR$(34), e$, i + 1)
+  pkg$ = MID$(e$, i, j - i)
+  pkg$ = REPLACE$(pkg$, ".", "/") + "/"
 ENDIF
 GOSUB SetProjPaths
 
@@ -293,11 +302,11 @@ tot+=0.5 : GW_SET_PROGRESSBAR(pgb_compil, tot) % -> 21.5 %
 
 % Copy main .bas + include files to assets/<my-app>/source
 GW_MODIFY(pgb_compil, "text", LBL$("copy_bas_res")) % Copying bas and resources
-IF log_act THEN DEGUB("    Copy main .bas + include files to assets/<my-app>/source")
+IF log_act THEN DEGUB("    Copy main .bas + includes to assets/<myapp>/source")
 GOSUB CopyAssetsSrc
 
 % Copy resources to assets/<my-app>/data
-IF log_act THEN DEGUB("    Copy resources to assets/<my-app>/data")
+IF log_act THEN DEGUB("    Copy resources to assets/<myapp>/data")
 GOSUB CopyAssetsData
 tot+=0.5 : GW_SET_PROGRESSBAR(pgb_compil, tot) % -> 22 %
 %===================================================================
